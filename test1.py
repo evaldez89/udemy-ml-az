@@ -7,3 +7,7 @@ x = np.linspace(0, 20, 100)
 print(x)
 plt.plot(x, np.sin(x))
 plt.show()
+
+#%%
+import numpy as np
+np.
