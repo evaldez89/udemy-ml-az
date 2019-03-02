@@ -30,3 +30,4 @@ regressor = LinearRegression()
 regressor.fit(X_train, y_train)
 
 #%% Predicting the test set result
+y_pred = regressor.predict(X_test)
