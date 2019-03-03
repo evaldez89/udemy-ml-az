@@ -26,21 +26,24 @@ def encode_categorical_data(data_set, col_index: int):
     onehotencoder = OneHotEncoder(categorical_features=[col_index])
     return onehotencoder.fit_transform(data_set).toarray()
 
-# method for simple linear regression
-def simple_linear_regressor(x_set, y_set):
-    # Fitting simple linear regression in the training set
-    regressor = LinearRegression()
-    regressor.fit(X_train, y_train)
-    
-    # y_pred = regressor.predict(X_test)  # No needed just to test
-    x_pred = regressor.predict(X_train)
-
+def plot_sets(x_set, y_set, x_pred):
     plt.scatter(x_set, y_set, color='red')
     plt.plot(X_train, x_pred, color='blue')
     plt.title('Salary vs Expirience (Training set)')
     plt.xlabel('Years of Expirience ')
     plt.ylabel('Salary ')
     plt.show()
+
+# method for simple linear regression
+def simple_linear_regressor(x_set, y_set, predict_y: bool = False):
+    # Fitting simple linear regression in the training set
+    regressor = LinearRegression()
+    regressor.fit(X_train, y_train)
+    
+    y_pred = regressor.predict(X_test) if predict_y == True else None
+    x_pred = regressor.predict(X_train)
+
+    return x_pred, y_pred
 
 #%% Importing the dataset
 doc_path = '50_Startups.csv'
@@ -58,6 +61,12 @@ X = encode_categorical_data(X, 3)
 #%% Splitting the dataset into the Training set and Test set
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2, random_state=0)
 
-# Show plot for simple linear regression
-# simple_linear_regressor(X_train, y_train)
-# simple_linear_regressor(X_test, y_test)
+#%% Show plot for simple linear regression
+# Set plot
+x_pred, y_pred = simple_linear_regressor(X_train, y_train, True) # Train
+x_pred, y_pred = simple_linear_regressor(X_test, y_test, True) # Test
+
+#%%
+# Show plot. --- Only for simple linear regression
+plot_sets(X_train, y_train, x_pred) # Train
+plot_sets(X_test, y_test, x_pred) # Test
