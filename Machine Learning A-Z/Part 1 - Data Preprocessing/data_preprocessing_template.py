@@ -24,26 +24,22 @@ X, y = get_data(dataset, -1, 1)
 #%% Splitting the dataset into the Training set and Test set
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 1/3, random_state=0)
 
+# method for simple linear regression
+def simple_linear_regressor(x_set, y_set):
+    # Fitting simple linear regression in the training set
+    regressor = LinearRegression()
+    regressor.fit(X_train, y_train)
+    
+    # y_pred = regressor.predict(X_test)  # No needed just to test
+    x_pred = regressor.predict(X_train)
 
-#%% Fitting simple linear regression in the training set
-regressor = LinearRegression()
-regressor.fit(X_train, y_train)
+    plt.scatter(x_set, y_set, color='red')
+    plt.plot(X_train, x_pred, color='blue')
+    plt.title('Salary vs Expirience (Training set)')
+    plt.xlabel('Years of Expirience ')
+    plt.ylabel('Salary ')
+    plt.show()
 
-#%% Predicting the test set result
-y_pred = regressor.predict(X_test)
-
-#%% Visualize the traning set result
-plt.scatter(X_train, y_train, color='red')
-plt.plot(X_train, regressor.predict(X_train), color='blue')
-plt.title('Salary vs Expirience (Training set)')
-plt.xlabel('Years of Expirience ')
-plt.ylabel('Salary ')
-plt.show()
-
-#%% Visualize the Test set result
-plt.scatter(X_test, y_test, color='red')
-plt.plot(X_train, regressor.predict(X_train), color='blue')
-plt.title('Salary vs Expirience (Test set)')
-plt.xlabel('Years of Expirience ')
-plt.ylabel('Salary ')
-plt.show()
+#%% Show plot
+simple_linear_regressor(X_train, y_train)
+simple_linear_regressor(X_test, y_test)
